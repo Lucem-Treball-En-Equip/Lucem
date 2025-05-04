@@ -1,0 +1,142 @@
+@font-face {
+	font-family: 'MyFont';
+	src: url(../resources/fonts/long_pixel-7.ttf);
+}
+
+html{
+	background-image: url(../resources/backgrounds/starfield.png);
+	background-size: tiled;
+	font-family:'MyFont';
+}
+
+body{
+	padding-top: 130px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type=number]{
+	height: 3rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 3rem;
+    text-align: center;
+	width: 250px;
+}
+
+#title{
+	font-size: 1.875rem;
+	line-height: 4.6875rem;
+	color: white;
+}
+
+h2{
+	font-size: 1.4rem;
+	line-height: 4.6875rem;
+	display:block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	color: #ff7db3;
+}
+
+.opt{
+	color: white
+}
+
+.center{
+	display:block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+	height: 75px;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+p{
+	text-align: center;
+	font-size: 1.2rem;
+	color: white
+}
+
+label{
+	font-size: 1.2rem;
+	color: white;
+	text-align: center;
+}
+
+button{
+	background-color: #ff7db3;
+	font-family:'MyFont';
+	font-weight: 800;
+	font-size: x-large;
+	color: #000000;
+	border: 0.2rem solid #ffffff;
+	border-radius: 2rem;
+	box-shadow: #000000 0.375rem 0.375rem 0 0;
+}
+
+button.center:active{
+	font-size: 18px;
+	color: #ffffff;
+	width: 275px;
+	height: 70px;
+	background-color: #ff4190;
+}
+
+button.center:hover:not(:active){
+	font-size: 22px;
+	width: 315px;
+	height: 80px;
+	background-color: #ff68a7;
+}
+
+input, select {
+    width: 250px;
+    padding: 10px;
+    margin: 10px auto;
+    font-size: 1.3rem;
+	font-weight: bold;
+    display: block;
+    border: 2px solid #ff68a7;
+    border-radius: 1rem;
+    background-color: white;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: #ff7db3;
+}
+
+th, td {
+    border: 3px solid #ff7db3;
+    padding: 12px;
+    text-align: center;
+    font-size: 18px;
+}
+
+th {
+    background-color: #ff4190;
+    color: white;
+}
+
+td {
+    background-color: #fff;
+}
+
+.container {
+    margin-top: 80px;
+    text-align: center;
+}
+
+#game-container {
+	display:block;
+	text-align: center; 
+	padding-top: 50px;
+	scale: 1.5;
+}

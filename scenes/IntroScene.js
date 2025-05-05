@@ -38,7 +38,11 @@ export class IntroScene extends Phaser.Scene {
 
         this.updateDialogue();
 		
-        this.input.keyboard.on('keydown-SPACE', () => {
+        this.input.keyboard.on('keydown-SPACE', this.advanceDialogue, this);
+		this.input.keyboard.on('keydown-D', this.advanceDialogue, this);
+		this.input.on('pointerdown', this.advanceDialogue, this);
+		
+        advanceDialogue() {
             this.currentLine++;
             if (this.currentLine < this.dialogueLines.length) {
                 this.updateDialogue();
@@ -47,7 +51,16 @@ export class IntroScene extends Phaser.Scene {
 				alert('No next level yet!');
 				window.location.href = "../index.html";
             }
-        });
+        }
+		
+		this.input.keyboard.on('keydown-A', this.reverseDialogue, this);
+		
+        reverseDialogue() {
+            this.currentLine--;
+            if (this.currentLine >= 0) {
+                this.updateDialogue();
+            }
+        }
     }
 
     updateDialogue() {

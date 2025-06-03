@@ -33,12 +33,12 @@ export class Level1Scene extends Phaser.Scene {
 
 		const groundLayer = map.createLayer('Ground', [tiles, b1], 0, 0);
 		const platformsLayer = map.createLayer('Platforms', [tiles, b1], 0, 0);
-        groundLayer.setCollisionByProperty({ collides: true });
-        platformsLayer.setCollisionByProperty({ collides: true });
+        //groundLayer.setCollisionByProperty({ collides: true });
+        //platformsLayer.setCollisionByProperty({ collides: true });
 
         // Enable collisions on certain layers
-		//groundLayer.setCollisionByExclusion([-1]);
-		//platformsLayer.setCollisionByExclusion([-1]);
+		groundLayer.setCollisionByExclusion([-1]);
+		platformsLayer.setCollisionByExclusion([-1]);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');

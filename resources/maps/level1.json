@@ -312,8 +312,18 @@
  "tileheight":40,
  "tilesets":[
         {
+         "columns":50,
          "firstgid":1,
-         "source":"..\/tiles\/tiles.tsx"
+         "image":"..\/tiles\/tiles.png",
+         "imageheight":2400,
+         "imagewidth":2000,
+         "margin":0,
+         "name":"tiles",
+         "spacing":0,
+         "tilecount":3000,
+         "tileheight":40,
+         "tilewidth":40,
+         "transparentcolor":"#ff00ff"
         }],
  "tilewidth":40,
  "type":"map",

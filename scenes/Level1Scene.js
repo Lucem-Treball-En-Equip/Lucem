@@ -63,6 +63,16 @@ export class Level1Scene extends Phaser.Scene {
 		map.getObjectLayer('Enemies').objects.forEach(enemyObj => {
 			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 0);
 			enemy.setCollideWorldBounds(true);
+			enemy.play('enemy_walk');
+			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
+			enemy.direction = 'left'; // Guardem direcció actual
+		});
+
+		this.anims.create({
+			key: 'enemy_walk',
+			frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }),
+			frameRate: 6,
+			repeat: -1
 		});
 
 		// Collisions for enemies too
@@ -86,11 +96,35 @@ export class Level1Scene extends Phaser.Scene {
 		}
 
 		if (this.cursors.up.isDown && this.player.body.onFloor()) {
-			this.player.setVelocityY(-8000);
+			this.player.setVelocityY(-10000);
 		}
 
         if (!this.player.body.onFloor()) {
-			this.player.setVelocityY(50);
+			this.player.setVelocityY(100);
 		}
+
+		this.enemies.getChildren().forEach(enemy => {
+			const touchingDown = enemy.body.blocked.down || enemy.body.touching.down;
+
+			// Detector de buit al davant
+			//const nextX = enemy.x + (enemy.direction === 'left' ? -10 : 10);
+			//const nextY = enemy.y + 40;
+
+			const tileBelow = platformsLayer.getTileAtWorldXY(touchingDown, true);
+			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
+
+			if (!tileBelow || wallAhead) {
+				// Canviem direcció
+				if (enemy.direction === 'left') {
+					enemy.direction = 'right';
+					enemy.setVelocityX(100);
+					enemy.setFlipX(true);
+				} else {
+					enemy.direction = 'left';
+					enemy.setVelocityX(-100);
+					enemy.setFlipX(false);
+				}
+			}
+		});
     }
 }

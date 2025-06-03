@@ -9,6 +9,20 @@
     "fileStates": {
         "": {
             "scaleInDock": 0.33
+        },
+        "level1new.json": {
+            "scale": 0.5,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 584,
+                "y": 179
+            }
+        },
+        "level1new.json#b1": {
+            "scaleInDock": 0.33
+        },
+        "level1new.json#tiles": {
+            "scaleInDock": 0.33
         }
     },
     "last.exportedFilePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/maps",
@@ -23,6 +37,7 @@
     ],
     "project": "levels.tiled-project",
     "recentFiles": [
+        "level1new.json"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {

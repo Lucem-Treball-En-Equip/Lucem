@@ -46,7 +46,18 @@ export class Level1Scene extends Phaser.Scene {
         // Add player sprite (only first frame for now)
 		this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
 		this.player.setCollideWorldBounds(true);
-		this.player.body.setSize(35, 85);
+		this.player.body.setSize(60, 80);
+
+		this.anims.create({ key: 'idle', frames: [ { key: 'player', frame: 0 } ], frameRate: 1 });
+		this.anims.create({ key: 'run', frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }), frameRate: 10, repeat: -1 });
+		this.anims.create({ key: 'jump', frames: [ { key: 'player', frame: 14 } ], frameRate: 1 });
+		this.anims.create({ key: 'attack', frames: this.anims.generateFrameNumbers('player', { start: 18, end: 22 }), frameRate: 12 });
+		this.anims.create({ key: 'crawl', frames: this.anims.generateFrameNumbers('player', { start: 24, end: 28 }), frameRate: 8, repeat: -1 });
+		this.anims.create({ key: 'crawl_attack', frames: this.anims.generateFrameNumbers('player', { start: 30, end: 33 }), frameRate: 10 });
+		this.anims.create({ key: 'damage', frames: [ { key: 'player', frame: 1 } ], frameRate: 1 });
+		this.anims.create({ key: 'death', frames: [ { key: 'player', frame: 35 } ], frameRate: 1 });
+
+		this.playerState = 'idle';
 		
         // Camera setup
 		this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -62,20 +73,20 @@ export class Level1Scene extends Phaser.Scene {
         // Spawn enemies from object layer
 		this.enemies = this.physics.add.group();
 		map.getObjectLayer('Enemies').objects.forEach(enemyObj => {
-			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 0);
+			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 8);
 			enemy.setCollideWorldBounds(true);
-			enemy.play('enemy_walk');
+			//enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
-			enemy.body.setSize(110, 70);
+			enemy.body.setSize(90, 70);
 		});
 
-		this.anims.create({
+		/*this.anims.create({
 			key: 'enemy_walk',
 			frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }),
 			frameRate: 6,
 			repeat: -1
-		});
+		});*/
 
 		// Collisions for enemies too
 		this.physics.add.collider(this.enemies, groundLayer);
@@ -88,43 +99,63 @@ export class Level1Scene extends Phaser.Scene {
 
     update() {
 		const speed = 200;
+		const isOnFloor = this.player.body.onFloor();
 
+		let moving = false;
+		
 		this.player.setVelocity(0);
 
 		if (this.cursors.left.isDown) {
 			this.player.setVelocityX(-speed);
+			this.player.setFlipX(true);
+			moving = true;
 		} else if (this.cursors.right.isDown) {
 			this.player.setVelocityX(speed);
+			this.player.setFlipX(false);
+			moving = true;
 		}
 
-		if (this.cursors.up.isDown && this.player.body.onFloor()) {
-			this.player.setVelocityY(-10000);
+		// Salt
+		if (this.cursors.up.isDown && isOnFloor) {
+			this.player.setVelocityY(-15000);
+			this.playerState = 'jump';
+			this.player.play('jump', true);
 		}
 
-        if (!this.player.body.onFloor()) {
-			this.player.setVelocityY(100);
+        // Estats
+		if (!isOnFloor) {
+			this.player.setVelocityY(200);
+			this.playerState = 'jump';
+			this.player.play('jump', true);
+		} else if (moving) {
+			if (this.cursors.down.isDown) {
+				this.player.body.setSize(80, 60);
+				this.playerState = 'crawl';
+				this.player.play('crawl', true);
+			} else {
+				this.player.body.setSize(60, 80);
+				this.playerState = 'run';
+				this.player.play('run', true);
+			}
+		} else {
+			this.playerState = 'idle';
+			this.player.play('idle', true);
 		}
 
 		this.enemies.getChildren().forEach(enemy => {
-			const touchingDown = enemy.body.blocked.down || enemy.body.touching.down;
-
-			// Detector de buit al davant
-			//const nextX = enemy.x + (enemy.direction === 'left' ? -10 : 10);
-			//const nextY = enemy.y + 40;
-
-			const tileBelow = platformsLayer.getTileAtWorldXY(touchingDown, true);
+			const tileBelow = enemy.body.blocked.down || enemy.body.touching.down;
 			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
 
 			if (!tileBelow || wallAhead) {
 				// Canviem direcció
 				if (enemy.direction === 'left') {
 					enemy.direction = 'right';
-					enemy.setVelocityX(100);
 					enemy.setFlipX(true);
+					enemy.setVelocityX(100);
 				} else {
 					enemy.direction = 'left';
-					enemy.setVelocityX(-100);
 					enemy.setFlipX(false);
+					enemy.setVelocityX(-100);
 				}
 			}
 		});

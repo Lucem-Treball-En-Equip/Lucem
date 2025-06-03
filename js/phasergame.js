@@ -5,7 +5,7 @@ const config = {
     type: Phaser.AUTO,
     width: 1030,
     height: 720,
-	scale: 1.5,
+	scale: 1.0,
     parent: 'gameContainer',
     backgroundColor: '#01003C',
     scene: [GameTypeScene, GameScene]

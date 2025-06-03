@@ -8,7 +8,7 @@
     ],
     "fileStates": {
         "": {
-            "scaleInDock": 1
+            "scaleInDock": 0.33
         }
     },
     "last.exportedFilePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/maps",
@@ -26,8 +26,8 @@
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 600,
-        "width": 1800
+        "height": 40,
+        "width": 40
     },
     "tileset.useTransparentColor": true
 }

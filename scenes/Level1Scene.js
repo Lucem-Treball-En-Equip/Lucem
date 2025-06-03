@@ -46,6 +46,7 @@ export class Level1Scene extends Phaser.Scene {
         // Add player sprite (only first frame for now)
 		this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
 		this.player.setCollideWorldBounds(true);
+		this.player.body.setSize(35, 85);
 		
         // Camera setup
 		this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -66,6 +67,7 @@ export class Level1Scene extends Phaser.Scene {
 			enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
+			enemy.body.setSize(110, 70);
 		});
 
 		this.anims.create({

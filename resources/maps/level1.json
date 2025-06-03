@@ -313,7 +313,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/..\/tiles.tsj"
+         "source":"..\/tiles\/tiles.tsx"
         }],
  "tilewidth":40,
  "type":"map",

@@ -5,7 +5,7 @@ export class Level1Scene extends Phaser.Scene {
 
 	preload() {
 		this.load.image('tiles', '../resources/tiles/tiles.png');
-        this.load.tilemapTiledJSON('map', '../resources/map/level1.json');
+        this.load.tilemapTiledJSON('map', '../resources/maps/level1.json');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
             frameWidth: 40,

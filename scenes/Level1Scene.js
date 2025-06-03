@@ -46,7 +46,6 @@ export class Level1Scene extends Phaser.Scene {
         // Add player sprite (only first frame for now)
 		this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
 		this.player.setCollideWorldBounds(true);
-		this.player.body.setSize(75, 85);
 
 		this.anims.create({ key: 'idle', frames: [ { key: 'player', frame: 0 } ], frameRate: 1 }); //done
 		this.anims.create({ key: 'run', frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }), frameRate: 10, repeat: -1 }); //done
@@ -76,11 +75,11 @@ export class Level1Scene extends Phaser.Scene {
 		map.getObjectLayer('Enemies').objects.forEach(enemyObj => {
 			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 8);
 			enemy.setCollideWorldBounds(true);
-			//this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }), frameRate: 6,repeat: -1});
-			//enemy.play('enemy_walk');
+			this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }), frameRate: 6,repeat: -1});
+			enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
-			enemy.body.setSize(90, 70);
+			enemy.body.setSize(85, 60);
 		});
 
 		// Collisions for enemies too
@@ -124,7 +123,7 @@ export class Level1Scene extends Phaser.Scene {
 			this.player.play('jump', true);
 		} else if (moving) {
 			if (this.cursors.down.isDown) {
-				this.player.body.setSize(75, 40);
+				this.player.body.setSize(75, 75);
 				this.playerState = 'crawl';
 				this.player.play('crawl', true);
 			} else {
@@ -134,7 +133,7 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		} else {
 			if (this.cursors.down.isDown) {
-				this.player.body.setSize(75, 40);
+				this.player.body.setSize(75, 75);
 				this.playerState = 'crawl_idle';
 				this.player.play('crawl_idle', true);
 			} else {

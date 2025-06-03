@@ -105,11 +105,7 @@ export class Level1Scene extends Phaser.Scene {
         this.enemies.getChildren().forEach(enemy => {
             const touchingDown = enemy.body.blocked.down || enemy.body.touching.down;
 
-            // Detector de buit al davant
-            const nextX = enemy.x + (enemy.direction === 'left' ? -10 : 10);
-            const nextY = enemy.y + 40;
-
-            const tileBelow = platformsLayer.getTileAtWorldXY(nextX, nextY, true);
+            const tileBelow = platformsLayer.getTileAtWorldXY(touchingDown, true);
             const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
 
             if (!tileBelow || wallAhead) {

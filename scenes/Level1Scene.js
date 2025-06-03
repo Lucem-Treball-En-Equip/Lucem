@@ -9,8 +9,8 @@ export class Level1Scene extends Phaser.Scene {
         this.load.image('b1', '../resources/tiles2/b1.png');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
-            frameWidth: 80,
-			frameHeight: 90
+            frameWidth: 75,
+			frameHeight: 85
         });
 
         this.load.spritesheet('enemy', '../resources/characters/bears.png', {
@@ -46,13 +46,14 @@ export class Level1Scene extends Phaser.Scene {
         // Add player sprite (only first frame for now)
 		this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
 		this.player.setCollideWorldBounds(true);
-		this.player.body.setSize(60, 80);
+		this.player.body.setSize(75, 85);
 
-		this.anims.create({ key: 'idle', frames: [ { key: 'player', frame: 0 } ], frameRate: 1 });
-		this.anims.create({ key: 'run', frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }), frameRate: 10, repeat: -1 });
-		this.anims.create({ key: 'jump', frames: [ { key: 'player', frame: 14 } ], frameRate: 1 });
+		this.anims.create({ key: 'idle', frames: [ { key: 'player', frame: 0 } ], frameRate: 1 }); //done
+		this.anims.create({ key: 'run', frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }), frameRate: 10, repeat: -1 }); //done
+		this.anims.create({ key: 'jump', frames: [ { key: 'player', frame: 14 } ], frameRate: 1 }); //done
 		this.anims.create({ key: 'attack', frames: this.anims.generateFrameNumbers('player', { start: 18, end: 22 }), frameRate: 12 });
-		this.anims.create({ key: 'crawl', frames: this.anims.generateFrameNumbers('player', { start: 24, end: 28 }), frameRate: 8, repeat: -1 });
+		this.anims.create({ key: 'crawl_idle', frames: [ { key: 'player', frame: 24 } ], frameRate: 1 });
+		this.anims.create({ key: 'crawl', frames: this.anims.generateFrameNumbers('player', { start: 24, end: 28 }), frameRate: 8, repeat: -1 }); //done
 		this.anims.create({ key: 'crawl_attack', frames: this.anims.generateFrameNumbers('player', { start: 30, end: 33 }), frameRate: 10 });
 		this.anims.create({ key: 'damage', frames: [ { key: 'player', frame: 1 } ], frameRate: 1 });
 		this.anims.create({ key: 'death', frames: [ { key: 'player', frame: 35 } ], frameRate: 1 });
@@ -75,18 +76,12 @@ export class Level1Scene extends Phaser.Scene {
 		map.getObjectLayer('Enemies').objects.forEach(enemyObj => {
 			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 8);
 			enemy.setCollideWorldBounds(true);
+			//this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }), frameRate: 6,repeat: -1});
 			//enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
 			enemy.body.setSize(90, 70);
 		});
-
-		/*this.anims.create({
-			key: 'enemy_walk',
-			frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }),
-			frameRate: 6,
-			repeat: -1
-		});*/
 
 		// Collisions for enemies too
 		this.physics.add.collider(this.enemies, groundLayer);
@@ -129,17 +124,24 @@ export class Level1Scene extends Phaser.Scene {
 			this.player.play('jump', true);
 		} else if (moving) {
 			if (this.cursors.down.isDown) {
-				this.player.body.setSize(80, 60);
+				this.player.body.setSize(75, 40);
 				this.playerState = 'crawl';
 				this.player.play('crawl', true);
 			} else {
-				this.player.body.setSize(60, 80);
+				this.player.body.setSize(75, 85);
 				this.playerState = 'run';
 				this.player.play('run', true);
 			}
 		} else {
-			this.playerState = 'idle';
-			this.player.play('idle', true);
+			if (this.cursors.down.isDown) {
+				this.player.body.setSize(75, 40);
+				this.playerState = 'crawl_idle';
+				this.player.play('crawl_idle', true);
+			} else {
+				this.player.body.setSize(75, 85);
+				this.playerState = 'idle';
+				this.player.play('idle', true);
+			}
 		}
 
 		this.enemies.getChildren().forEach(enemy => {

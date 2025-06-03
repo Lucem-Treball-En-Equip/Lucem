@@ -96,9 +96,12 @@ export class Level1Scene extends Phaser.Scene {
 		map.getObjectLayer('Treasures').objects.forEach(treasureObj => {
 			const treasure = this.treasures.create(treasureObj.x, treasureObj.y, 'treasure', 0);
 			treasure.setCollideWorldBounds(true);
-			//this.anims.create({ key: 'treasure_idle',frames: [ { key: 'treasure', frame: 0 } ], frameRate: 1 });
-			//treasure.play('treasure_idle');
+			enemy.body.setSize(50, 35);
 		});
+
+		// Collisions for treasures too
+		this.physics.add.collider(this.treasures, groundLayer);
+		this.physics.add.collider(this.treasures, platformsLayer);
 
 		// Simple keyboard controls (temporary)
 		this.cursors = this.input.keyboard.createCursorKeys();

@@ -4,8 +4,9 @@ export class Level1Scene extends Phaser.Scene {
     }
 
 	preload() {
-		this.load.image('tiles', '../resources/tiles/tiles.png');
-        this.load.tilemapTiledJSON('map', '../resources/maps/level1.json');
+        this.load.tilemapTiledJSON('level1', '../resources/maps/level1new.json');
+        this.load.image('tiles', '../resources/tiles2/tiles.png');
+        this.load.image('b1', '../resources/tiles2/b1.png');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
             frameWidth: 40,
@@ -20,17 +21,24 @@ export class Level1Scene extends Phaser.Scene {
 	
     create() {
 		// Load map
-		const map = this.make.tilemap({ key: 'map' });
-		const tileset = map.addTilesetImage('tiles', 'tiles');
+		const map = this.make.tilemap({ key: 'level1' });
+
+        // Afegim els tilesets (com coincideixen amb el nom definit a Tiled)
+        const tiles = map.addTilesetImage('tiles', 'tiles');
+        const b1 = map.addTilesetImage('b1', 'b1');
 
         // Tile layers
-		const bgLayer = map.createLayer('Background', tileset, 0, 0);
-		const groundLayer = map.createLayer('Ground', tileset, 0, 0);
-		const platformsLayer = map.createLayer('Platforms', tileset, 0, 0);
+		const backgroundLayer = map.createLayer('Background', [tiles, b1], 0, 0);
+        //backgroundLayer.setCollisionByProperty({ collides: true });
+
+		const groundLayer = map.createLayer('Ground', [tiles, b1], 0, 0);
+		const platformsLayer = map.createLayer('Platforms', [tiles, b1], 0, 0);
+        groundLayer.setCollisionByProperty({ collides: true });
+        platformsLayer.setCollisionByProperty({ collides: true });
 
         // Enable collisions on certain layers
-		groundLayer.setCollisionByExclusion([-1]);
-		platformsLayer.setCollisionByExclusion([-1]);
+		//groundLayer.setCollisionByExclusion([-1]);
+		//platformsLayer.setCollisionByExclusion([-1]);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');

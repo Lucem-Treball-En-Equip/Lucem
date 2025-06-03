@@ -1,0 +1,33 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/maps",
+    "last.imagePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/tiles2",
+    "map.height": 15,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 40,
+    "map.tileWidth": 40,
+    "map.width": 45,
+    "openFiles": [
+    ],
+    "project": "levels.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 600,
+        "width": 1800
+    },
+    "tileset.useTransparentColor": true
+}

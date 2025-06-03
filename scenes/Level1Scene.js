@@ -17,6 +17,11 @@ export class Level1Scene extends Phaser.Scene {
             frameWidth: 120,
 			frameHeight: 80
         });
+
+		this.load.spritesheet('treasure', '../resources/characters/treasure.png', {
+            frameWidth: 75,
+			frameHeight: 55
+        });
     }
 	
     create() {
@@ -86,6 +91,15 @@ export class Level1Scene extends Phaser.Scene {
 		this.physics.add.collider(this.enemies, groundLayer);
 		this.physics.add.collider(this.enemies, platformsLayer);
 
+		// Spawn treasures from object layer
+		this.treasures = this.physics.add.group();
+		map.getObjectLayer('Treasures').objects.forEach(treasureObj => {
+			const treasure = this.treasures.create(treasureObj.x, treasureObj.y, 'treasure', 0);
+			treasure.setCollideWorldBounds(true);
+			//this.anims.create({ key: 'treasure_idle',frames: [ { key: 'treasure', frame: 0 } ], frameRate: 1 });
+			//treasure.play('treasure_idle');
+		});
+
 		// Simple keyboard controls (temporary)
 		this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -123,21 +137,21 @@ export class Level1Scene extends Phaser.Scene {
 			this.player.play('jump', true);
 		} else if (moving) {
 			if (this.cursors.down.isDown) {
-				this.player.body.setSize(75, 75);
+				//this.player.body.setSize(75, 75);
 				this.playerState = 'crawl';
 				this.player.play('crawl', true);
 			} else {
-				this.player.body.setSize(75, 85);
+				//this.player.body.setSize(75, 85);
 				this.playerState = 'run';
 				this.player.play('run', true);
 			}
 		} else {
 			if (this.cursors.down.isDown) {
-				this.player.body.setSize(75, 75);
+				//this.player.body.setSize(75, 75);
 				this.playerState = 'crawl_idle';
 				this.player.play('crawl_idle', true);
 			} else {
-				this.player.body.setSize(75, 85);
+				//this.player.body.setSize(75, 85);
 				this.playerState = 'idle';
 				this.player.play('idle', true);
 			}

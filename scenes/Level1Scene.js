@@ -9,8 +9,8 @@ export class Level1Scene extends Phaser.Scene {
         this.load.image('b1', '../resources/tiles2/b1.png');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
-            frameWidth: 40,
-			frameHeight: 42
+            frameWidth: 80,
+			frameHeight: 90
         });
 
         this.load.spritesheet('enemy', '../resources/characters/bears.png', {
@@ -75,7 +75,7 @@ export class Level1Scene extends Phaser.Scene {
     }
 
     update() {
-		const speed = 160;
+		const speed = 200;
 
 		this.player.setVelocity(0);
 
@@ -86,7 +86,11 @@ export class Level1Scene extends Phaser.Scene {
 		}
 
 		if (this.cursors.up.isDown && this.player.body.onFloor()) {
-			this.player.setVelocityY(-300);
+			this.player.setVelocityY(-8000);
+		}
+
+        if (!this.player.body.onFloor()) {
+			this.player.setVelocityY(50);
 		}
     }
 }

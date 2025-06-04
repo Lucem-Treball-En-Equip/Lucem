@@ -95,6 +95,7 @@ export class Level1Scene extends Phaser.Scene {
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
 			enemy.startX = enemyObj.x; // Guardem posició inicial
+			enemy.lastHitTime = 0;
 			enemy.body.setSize(85, 60);
 		});
 
@@ -113,16 +114,22 @@ export class Level1Scene extends Phaser.Scene {
 		// Collisions for treasures too
 		this.physics.add.collider(this.treasures, groundLayer);
 		this.physics.add.collider(this.treasures, platformsLayer);
+		this.treasureFoundCount = 0;
 
 		// Detectar overlap entre player i tresors
 		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
 			//increaseTreasureCount();        // incrementem la puntuació global
 			treasure.disableBody(true, true);            // eliminem el tresor del mapa
-			console.log("Tresors trobats: +1"); // debug
+			this.treasureFoundCount++;
+			console.log("Tresors trobats: " + this.treasureFoundCount);
 		}, null, this);
 
 		// Simple keyboard controls (temporary)
 		this.cursors = this.input.keyboard.createCursorKeys();
+
+		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+		this.enemyKillCount = 0; // Inicialitzem contador local de morts
+		this.playerLives = 10;
 
     }
 
@@ -217,6 +224,30 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		}
 
+		// Comprovem si s'ha premut la tecla d'atac
+		if (Phaser.Input.Keyboard.JustDown(this.attackKey)) {
+			this.player.play('attack', true);
+
+			// Coordenades del jugador
+			const px = this.player.x;
+			const py = this.player.y;
+
+			// Radi de detecció
+			const detectionRadius = 120;
+
+			// Filtrar enemics dins el radi
+			this.enemies.getChildren().forEach(enemy => {
+				const distance = Phaser.Math.Distance.Between(px, py, enemy.x, enemy.y);
+
+				if (distance <= detectionRadius && enemy.active) {
+					enemy.disableBody(true, true); // Elimina l’enemic
+					this.enemyKillCount++;
+					console.log("Enemic eliminat. Total kills: " + this.enemyKillCount);
+				}
+			});
+		}
+
+		// Enemy movements
 		this.enemies.getChildren().forEach(enemy => {
 			const tileBelow = enemy.body.blocked.down || enemy.body.touching.down;
 			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
@@ -235,6 +266,34 @@ export class Level1Scene extends Phaser.Scene {
 					enemy.setVelocityX(-100);
 				}
 			}
+
+			// Coordenades del jugador
+			const px = this.player.x;
+			const py = this.player.y;
+
+			// Radi de detecció
+			const detectionRadiusBear = 40;
+			const distanceBear = Phaser.Math.Distance.Between(px, py, enemy.x, enemy.y);
+			const currentTime = this.time.now;
+			const pushAmount = 100;
+
+			if (currentTime - enemy.lastHitTime > 1000) {
+				if (distanceBear <= detectionRadiusBear && enemy.active) {
+					enemy.lastHitTime = currentTime;
+					this.playerLives--;
+					if (this.player.x < enemy.x) {
+						// L'enemic està a la dreta, empeny cap a l'esquerra
+						this.player.x -= pushAmount;
+					} else {
+						// L'enemic està a l'esquerra, empeny cap a la dreta
+						this.player.x += pushAmount;
+					}
+					this.player.play('damage', true);
+					console.log("Player wounded. Lifes left: " + this.playerLives);
+				}
+			}
+
+			
 		});
     }
 }

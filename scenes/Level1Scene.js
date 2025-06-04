@@ -121,6 +121,7 @@ export class Level1Scene extends Phaser.Scene {
 			//increaseTreasureCount();        // incrementem la puntuació global
 			treasure.disableBody(true, true);            // eliminem el tresor del mapa
 			this.treasureFoundCount++;
+			this.lootText.setText('Loot killed: ' + this.treasureFoundCount);
 			console.log("Tresors trobats: " + this.treasureFoundCount);
 		}, null, this);
 
@@ -130,6 +131,13 @@ export class Level1Scene extends Phaser.Scene {
 		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 		this.enemyKillCount = 0; // Inicialitzem contador local de morts
 		this.playerLives = 10;
+
+		this.livesText = this.add.text(16, 16, 'Lives left: ' + this.playerLives, { fontSize: '24px', fill: '#000' });
+		this.livesText.setScrollFactor(0); // perquè es mantingui a la càmera
+		this.bearsText = this.add.text(16, 46, 'Bears killed: ' + this.enemyKillCount, { fontSize: '24px', fill: '#000' });
+		this.bearsText.setScrollFactor(0);
+		this.lootText = this.add.text(16, 76, 'Loot collected: ' + this.treasureFoundCount, { fontSize: '24px', fill: '#000' });
+		this.lootText.setScrollFactor(0);
 
     }
 
@@ -242,6 +250,7 @@ export class Level1Scene extends Phaser.Scene {
 				if (distance <= detectionRadius && enemy.active) {
 					enemy.disableBody(true, true); // Elimina l’enemic
 					this.enemyKillCount++;
+					this.bearsText.setText('Bears killed: ' + this.enemyKillCount);
 					console.log("Enemic eliminat. Total kills: " + this.enemyKillCount);
 				}
 			});
@@ -289,6 +298,7 @@ export class Level1Scene extends Phaser.Scene {
 						this.player.x += pushAmount;
 					}
 					this.player.play('damage', true);
+					this.livesText.setText('Lives left: ' + this.playerLives);
 					console.log("Player wounded. Lifes left: " + this.playerLives);
 				}
 			}

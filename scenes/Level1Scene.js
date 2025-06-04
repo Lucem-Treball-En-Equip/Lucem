@@ -50,9 +50,9 @@ export class Level1Scene extends Phaser.Scene {
 		groundLayer.setCollisionByExclusion([-1]);
 		platformsLayer.setCollisionByExclusion([-1]);
 
-		this.add.image(50, 16, 'heart_icon').setVisible(true);
-		this.add.image(300, 16, 'bear_icon').setVisible(true);
-		this.add.image(700, 16, 'loot_icon').setVisible(true);
+		this.add.image(50, 30, 'heart_icon').setVisible(true);
+		this.add.image(350, 30, 'bear_icon').setVisible(true);
+		this.add.image(700, 30, 'loot_icon').setVisible(true);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');

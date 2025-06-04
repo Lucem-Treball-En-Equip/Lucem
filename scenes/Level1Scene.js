@@ -114,6 +114,13 @@ export class Level1Scene extends Phaser.Scene {
 		this.physics.add.collider(this.treasures, groundLayer);
 		this.physics.add.collider(this.treasures, platformsLayer);
 
+		// Detectar overlap entre player i tresors
+		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
+			//increaseTreasureCount();        // incrementem la puntuació global
+			treasure.disableBody(true, true);            // eliminem el tresor del mapa
+			console.log("Tresors trobats: +1"); // debug
+		}, null, this);
+
 		// Simple keyboard controls (temporary)
 		this.cursors = this.input.keyboard.createCursorKeys();
 

@@ -20,7 +20,7 @@ export class EndingScene extends Phaser.Scene {
 		//this.add.image(400, 300, 'bg').setOrigin(0.5); // 800x600 canvas
 		this.anims.create({
             key: 'bgLoop',
-            frames: this.anims.generateFrameNumbers('bgAnim', { start: 0, end: 9 }), // adjust frame range
+            frames: this.anims.generateFrameNumbers('bgAnim', { start: 0, end: 19 }), // adjust frame range
             frameRate: 8, // speed of the animation
             repeat: -1 // loop forever
         });

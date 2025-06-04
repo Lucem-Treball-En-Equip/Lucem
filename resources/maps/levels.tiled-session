@@ -3,19 +3,32 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level2new.json",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 0.33
+            "scaleInDock": 1
+        },
+        "level1.json": {
+            "scale": 0.31666666666666665,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 896.8421052631579,
+                "y": 298.42105263157896
+            }
+        },
+        "level1.json#tiles": {
+            "scaleInDock": 1
         },
         "level1new.json": {
             "scale": 0.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 850,
-                "y": 511
+                "x": 899,
+                "y": 299
             }
         },
         "level1new.json#b1": {
@@ -29,6 +42,43 @@
         },
         "level1new.json#tiles": {
             "scaleInDock": 0.33
+        },
+        "level1new.tmj": {
+            "scale": 0.31666666666666665,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 900.0000000000001,
+                "y": 301.57894736842104
+            }
+        },
+        "level1new.tmj#b1": {
+            "scaleInDock": 1
+        },
+        "level1new.tmj#b2": {
+            "scaleInDock": 1
+        },
+        "level1new.tmj#b3": {
+            "scaleInDock": 1
+        },
+        "level1new.tmj#tiles": {
+            "scaleInDock": 1
+        },
+        "level2new.json": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 588,
+                "y": 43
+            }
+        },
+        "level2new.json#b1": {
+            "scaleInDock": 0.25
+        },
+        "level2new.json#b2": {
+            "scaleInDock": 0.25
+        },
+        "level2new.json#tiles": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/maps",
@@ -40,10 +90,15 @@
     "map.tileWidth": 40,
     "map.width": 45,
     "openFiles": [
+        "level1new.json",
+        "level2new.json"
     ],
     "project": "levels.tiled-project",
     "recentFiles": [
-        "level1new.json"
+        "level1new.json",
+        "level2new.json",
+        "level1new.tmj",
+        "level1.json"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {

@@ -284,7 +284,7 @@ export class Level3Scene extends Phaser.Scene {
 		// Si està dins la zona i prem Q, canviem escena
 		if (this.isPlayerInNextZone && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('Q'))) {
 			console.log("Starting Ending scene");
-			alert('Ending scene starting!');
+			//alert('Ending scene starting!');
 			this.scene.start('EndingScene');
 		}
 

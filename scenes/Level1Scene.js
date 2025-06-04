@@ -29,6 +29,13 @@ export class Level1Scene extends Phaser.Scene {
     }
 	
     create() {
+		// Inicialitzar valors globals si no existeixen
+		if (this.registry.get('lives') === undefined) {
+			this.registry.set('lives', 10);
+			this.registry.set('treasures', 0);
+			this.registry.set('kills', 0);
+		}
+
 		// Load map
 		const map = this.make.tilemap({ key: 'level1' });
 
@@ -132,13 +139,15 @@ export class Level1Scene extends Phaser.Scene {
 		// Collisions for treasures too
 		this.physics.add.collider(this.treasures, groundLayer);
 		this.physics.add.collider(this.treasures, platformsLayer);
-		this.treasureFoundCount = 0;
+		//this.treasureFoundCount = 0;
+		this.treasureFoundCount = this.registry.get('treasures');
 
 		// Detectar overlap entre player i tresors
 		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
 			//increaseTreasureCount();        // incrementem la puntuació global
 			treasure.disableBody(true, true);            // eliminem el tresor del mapa
 			this.treasureFoundCount++;
+			this.registry.set('treasures', this.treasureFoundCount);
 			this.lootText.setText('' + this.treasureFoundCount);
 			console.log("Tresors trobats: " + this.treasureFoundCount);
 		}, null, this);
@@ -147,8 +156,10 @@ export class Level1Scene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-		this.enemyKillCount = 0; // Inicialitzem contador local de morts
-		this.playerLives = 10;
+		//this.enemyKillCount = 0; // Inicialitzem contador local de morts
+		this.enemyKillCount = this.registry.get('kills');
+		//this.playerLives = 10;
+		this.playerLives = this.registry.get('lives');
 
 		this.livesText = this.add.text(112, 32, '' + this.playerLives, { fontSize: '18px', fill: '#fff' });
 		this.livesText.setScrollFactor(0); // perquè es mantingui a la càmera
@@ -267,6 +278,7 @@ export class Level1Scene extends Phaser.Scene {
 				if (distance <= detectionRadius && enemy.active) {
 					enemy.disableBody(true, true); // Elimina l’enemic
 					this.enemyKillCount++;
+					this.registry.set('kills', this.enemyKillCount);
 					this.bearsText.setText('' + this.enemyKillCount);
 					console.log("Enemic eliminat. Total kills: " + this.enemyKillCount);
 				}
@@ -322,6 +334,7 @@ export class Level1Scene extends Phaser.Scene {
 				if (distanceBear <= detectionRadiusBear && enemy.active) {
 					enemy.lastHitTime = currentTime;
 					this.playerLives--;
+					this.registry.set('lives', this.playerLives);
 					if (this.player.x < enemy.x) {
 						// L'enemic està a la dreta, empeny cap a l'esquerra
 						this.player.x -= pushAmount;

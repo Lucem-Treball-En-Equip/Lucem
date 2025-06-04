@@ -12,14 +12,20 @@
         },
         "level1new.json": {
             "scale": 0.5,
-            "selectedLayer": 5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 584,
-                "y": 179
+                "x": 850,
+                "y": 511
             }
         },
         "level1new.json#b1": {
             "scaleInDock": 0.33
+        },
+        "level1new.json#b2": {
+            "scaleInDock": 1
+        },
+        "level1new.json#b3": {
+            "scaleInDock": 1
         },
         "level1new.json#tiles": {
             "scaleInDock": 0.33

@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"level1new.json"
-        }
-    },
  "height":15,
  "infinite":false,
  "layers":[
@@ -129,6 +121,17 @@
                  "width":0,
                  "x":178,
                  "y":522
+                }, 
+                {
+                 "height":120,
+                 "id":19,
+                 "name":"NextLevelZone",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":180,
+                 "x":1606,
+                 "y":452
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -312,8 +315,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":18,
+ "nextlayerid":10,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

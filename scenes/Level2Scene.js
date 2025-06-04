@@ -1,6 +1,6 @@
-export class Level1Scene extends Phaser.Scene {
+export class Level2Scene extends Phaser.Scene {
     constructor() {
-        super('Level1Scene');
+        super('Level2Scene');
     }
 
 	preload() {

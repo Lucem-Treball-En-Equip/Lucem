@@ -4,9 +4,9 @@ export class Level2Scene extends Phaser.Scene {
     }
 
 	preload() {
-        this.load.tilemapTiledJSON('level1', '../resources/maps/level2new.json');
+        this.load.tilemapTiledJSON('level2', '../resources/maps/level2new.json');
         this.load.image('tiles', '../resources/tiles2/tiles.png');
-        this.load.image('b1', '../resources/tiles2/b2.png');
+        this.load.image('b2', '../resources/tiles2/b2.png');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
             frameWidth: 75,
@@ -30,19 +30,19 @@ export class Level2Scene extends Phaser.Scene {
 	
     create() {
 		// Load map
-		const map = this.make.tilemap({ key: 'level1' });
+		const map = this.make.tilemap({ key: 'level2' });
 
         // Afegim els tilesets (com coincideixen amb el nom definit a Tiled)
         const tiles = map.addTilesetImage('tiles', 'tiles');
-        const b1 = map.addTilesetImage('b1', 'b1');
+        const b2 = map.addTilesetImage('b2', 'b2');
 
         // Tile layers
-		const backgroundLayer = map.createLayer('Background', [tiles, b1], 0, 0);
+		const backgroundLayer = map.createLayer('Background', [tiles, b2], 0, 0);
         //backgroundLayer.setCollisionByProperty({ collides: true });
 
-		const groundLayer = map.createLayer('Ground', [tiles, b1], 0, 0);
-		const platformsLayer = map.createLayer('Platforms', [tiles, b1], 0, 0);
-		const fireLayer = map.createLayer('Foreground', [tiles, b1], 0, 0);
+		const groundLayer = map.createLayer('Ground', [tiles, b2], 0, 0);
+		const platformsLayer = map.createLayer('Platforms', [tiles, b2], 0, 0);
+		const fireLayer = map.createLayer('Foreground', [tiles, b2], 0, 0);
         //groundLayer.setCollisionByProperty({ collides: true });
         //platformsLayer.setCollisionByProperty({ collides: true });
 

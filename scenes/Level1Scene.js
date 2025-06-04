@@ -26,6 +26,8 @@ export class Level1Scene extends Phaser.Scene {
 		this.load.image('heart_icon', '../resources/dialog/heart_icon.png');
         this.load.image('bear_icon', '../resources/dialog/bear_icon.png');
         this.load.image('loot_icon', '../resources/dialog/loot_icon.png');
+		this.load.image('skip', '../resources/dialog/skip.png');
+        this.load.image('esc', '../resources/dialog/esc.png');
     }
 	
     create() {
@@ -60,6 +62,8 @@ export class Level1Scene extends Phaser.Scene {
 		this.add.image(100, 40, 'heart_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(400, 40, 'loot_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(700, 40, 'bear_icon').setScrollFactor(0).setVisible(true);
+		this.add.image(720, 530, 'skip').setScrollFactor(0).setVisible(true);
+        this.add.image(30, 530, 'esc').setScrollFactor(0).setVisible(true);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');

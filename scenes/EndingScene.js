@@ -14,6 +14,8 @@ export class EndingScene extends Phaser.Scene {
         this.load.image('d2', '../resources/dialog/d2.png');
         this.load.image('d3', '../resources/dialog/d3.png');
         this.load.image('d4', '../resources/dialog/d4.png');
+        this.load.image('skip', '../resources/dialog/skip.png');
+        this.load.image('esc', '../resources/dialog/esc.png');
     }
 	
     create() {
@@ -27,6 +29,8 @@ export class EndingScene extends Phaser.Scene {
 
         this.bg = this.add.sprite(400, 300, 'bgAnim').setOrigin(0.5);
         this.bg.play('bgLoop');
+        this.add.image(720, 530, 'skip').setScrollFactor(0).setVisible(true);
+        this.add.image(30, 530, 'esc').setScrollFactor(0).setVisible(true);
 
 		this.characterImages = [
             this.add.image(400, 300, 'doctor').setVisible(false),

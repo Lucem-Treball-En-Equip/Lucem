@@ -1,4 +1,3 @@
-import { treasureCount, increaseTreasureCount } from '../js/globals';
 export class Level1Scene extends Phaser.Scene {
     constructor() {
         super('Level1Scene');
@@ -114,17 +113,9 @@ export class Level1Scene extends Phaser.Scene {
 		// Collisions for treasures too
 		this.physics.add.collider(this.treasures, groundLayer);
 		this.physics.add.collider(this.treasures, platformsLayer);
-		
-		// Detectar overlap entre player i tresors
-		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
-			increaseTreasureCount();        // incrementem la puntuació global
-			treasure.destroy();             // eliminem el tresor del mapa
-			console.log("Tresors trobats:", treasureCount); // debug
-		}, null, this);
 
 		// Simple keyboard controls (temporary)
 		this.cursors = this.input.keyboard.createCursorKeys();
-		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
     }
 
@@ -219,43 +210,6 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		}
 
-		// ATAC
-		if (Phaser.Input.Keyboard.JustDown(this.attackKey)) {
-			if (this.playerState === 'crawl' || this.playerState === 'crawl_idle') {
-				this.player.play('crawl', false);
-				this.player.play('crawl_attack', true);
-				console.log("Crawl attack");
-			} else {
-				this.player.play('idle', false);
-				this.player.play('run', false);
-				this.player.play('attack', true);
-				console.log("Attack");
-			}
-		}
-
-		this.player.on('animationcomplete', (anim) => {
-			if (anim.key === 'attack' || anim.key === 'crawl_attack') {
-				// Torna a l'animació segons estat actual
-				switch (this.playerState) {
-					case 'crawl':
-						this.player.play('crawl', true);
-						break;
-					case 'crawl_idle':
-						this.player.play('crawl_idle', true);
-						break;
-					case 'run':
-						this.player.play('run', true);
-						break;
-					case 'idle':
-						this.player.play('idle', true);
-						break;
-					case 'jump':
-						this.player.play('jump', true);
-						break;
-				}
-			}
-		});
-
 		this.enemies.getChildren().forEach(enemy => {
 			const tileBelow = enemy.body.blocked.down || enemy.body.touching.down;
 			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
@@ -276,5 +230,4 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		});
     }
-
 }

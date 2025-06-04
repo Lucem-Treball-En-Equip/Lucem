@@ -4,13 +4,13 @@ export class DeathScene extends Phaser.Scene {
     }
 
 	preload() {
-        this.load.image('bg', '../resources/dialog/black.png');
+        this.load.image('black', '../resources/dialog/black.png');
 		this.load.image('frame', '../resources/dialog/frame.png');
         this.load.image('d4', '../resources/dialog/d4.png');
     }
 	
     create() {
-		this.add.image(400, 300, 'bg').setOrigin(0.5); // 800x600 canvas
+		this.add.image(400, 300, 'black').setOrigin(0.5); // 800x600 canvas
 		
 		this.characterImages = [
             this.add.image(400, 300, 'frame').setVisible(true),

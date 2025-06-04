@@ -342,6 +342,10 @@ export class Level3Scene extends Phaser.Scene {
 						this.player.x += pushAmount;
 					}
 					this.player.play('damage', true);
+					player.setTint(0xff0000); // Red tint to indicate damage
+					this.time.delayedCall(500, () => {
+						player.clearTint(); // Remove the tint after 1 second
+					});
 					this.livesText.setText('' + this.playerLives);
 					console.log("Player wounded. Lifes left: " + this.playerLives);
 

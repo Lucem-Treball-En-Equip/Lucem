@@ -4,7 +4,6 @@ export class EndingScene extends Phaser.Scene {
     }
 
 	preload() {
-		//this.load.image('bg', '../resources/backgrounds/bg.png');
         this.load.spritesheet('bgAnim', '../resources/backgrounds/bgend.png', { frameWidth: 800, frameHeight: 600});
 
         this.load.image('doctor', '../resources/dialog/DRdialog.png');
@@ -21,10 +20,9 @@ export class EndingScene extends Phaser.Scene {
     }
 	
     create() {
-		//this.add.image(400, 300, 'bg').setOrigin(0.5); // 800x600 canvas
 		this.anims.create({
             key: 'bgLoop',
-            frames: this.anims.generateFrameNumbers('bgAnim', { start: 0, end: 19 }), // adjust frame range
+            frames: this.anims.generateFrameNumbers('bgAnim', { start: 0, end: 19 }),
             frameRate: 8, // speed of the animation
             repeat: -1 // loop forever
         });
@@ -42,8 +40,6 @@ export class EndingScene extends Phaser.Scene {
 
         this.musicOwn = this.sound.add('end', { loop: true });
         this.musicOwn.play();
-
-        // Desa la música a la "data" global si vols parar-la des d'una altra escena
         this.registry.set('end', this.music);
 
 		this.characterImages = [
@@ -86,9 +82,6 @@ export class EndingScene extends Phaser.Scene {
             if (this.currentLine < this.dialogueLines.length) {
                 this.updateDialogue();
             } else {
-                //alert('End of the game!');
-                //this.scene.start('Level1Scene');
-				//alert('No next level yet!');
                 if (this.musicOwn && this.musicOwn.isPlaying) {
                     this.musicOwn.stop();
                     this.registry.remove('end');

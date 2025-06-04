@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level2new.json",
+    "activeFile": "level3new.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -87,10 +87,10 @@
         },
         "level3new.json": {
             "scale": 0.44913888888888887,
-            "selectedLayer": 2,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 840.4972478199023,
-                "y": 301.6884161048921
+                "x": 838.2707650442205,
+                "y": 141.38165625579825
             }
         },
         "level3new.json#b1": {
@@ -113,12 +113,14 @@
     "map.width": 45,
     "openFiles": [
         "level1new.json",
-        "level2new.json"
+        "level2new.json",
+        "level3new.json"
     ],
     "project": "levels.tiled-project",
     "recentFiles": [
         "level1new.json",
         "level2new.json",
+        "level3new.json",
         "level1new.tmj",
         "level1.json"
     ],

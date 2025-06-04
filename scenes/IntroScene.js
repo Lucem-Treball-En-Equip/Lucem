@@ -20,8 +20,6 @@ export class IntroScene extends Phaser.Scene {
 
         this.music = this.sound.add('introMusic', { loop: true });
         this.music.play();
-
-        // Desa la música a la "data" global si vols parar-la des d'una altra escena
         this.registry.set('introMusicRef', this.music);
 		
 		this.characterImages = [
@@ -64,7 +62,7 @@ export class IntroScene extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-ESC', () => {
             this.scene.pause();
-            this.scene.launch('PauseScene', { returnTo: this.scene.key }); // Pass the current scene's key
+            this.scene.launch('PauseScene', { returnTo: this.scene.key });
         });
     }
 

@@ -31,7 +31,7 @@ export class Level1Scene extends Phaser.Scene {
     }
 	
     create() {
-		// Inicialitzar valors globals si no existeixen
+		// Initialise values
 		if (this.registry.get('lives') === undefined) {
 			this.registry.set('lives', 10);
 			this.registry.set('treasures', 0);
@@ -41,28 +41,24 @@ export class Level1Scene extends Phaser.Scene {
 		// Load map
 		const map = this.make.tilemap({ key: 'level1' });
 
-        // Afegim els tilesets (com coincideixen amb el nom definit a Tiled)
+        // Adding tilesets
         const tiles = map.addTilesetImage('tiles', 'tiles');
         const b1 = map.addTilesetImage('b1', 'b1');
 
         // Tile layers
 		const backgroundLayer = map.createLayer('Background', [tiles, b1], 0, 0);
-        //backgroundLayer.setCollisionByProperty({ collides: true });
-
 		const groundLayer = map.createLayer('Ground', [tiles, b1], 0, 0);
 		const platformsLayer = map.createLayer('Platforms', [tiles, b1], 0, 0);
 		const fireLayer = map.createLayer('Foreground', [tiles, b1], 0, 0);
-        //groundLayer.setCollisionByProperty({ collides: true });
-        //platformsLayer.setCollisionByProperty({ collides: true });
 
         // Enable collisions on certain layers
 		groundLayer.setCollisionByExclusion([-1]);
 		platformsLayer.setCollisionByExclusion([-1]);
 
+		// Adding icons
 		this.add.image(100, 40, 'heart_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(400, 40, 'loot_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(700, 40, 'bear_icon').setScrollFactor(0).setVisible(true);
-		//this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
         this.add.image(50, 570, 'esc').setScrollFactor(0).setVisible(true);
 
         // Find player spawn from object layer
@@ -72,6 +68,7 @@ export class Level1Scene extends Phaser.Scene {
 		this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
 		this.player.setCollideWorldBounds(true);
 
+		// Player animations
 		this.anims.create({ key: 'idle', frames: [ { key: 'player', frame: 0 } ], frameRate: 1 }); //done
 		this.anims.create({ key: 'run', frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }), frameRate: 10, repeat: -1 }); //done
 		this.anims.create({ key: 'jump', frames: [ { key: 'player', frame: 14 } ], frameRate: 1 }); //done
@@ -84,23 +81,23 @@ export class Level1Scene extends Phaser.Scene {
 
 		this.playerState = 'idle';
 
-		this.player.body.setGravityY(0); // Gestionarem la gravetat manualment
-		this.jumpVelocity = -20000;        // Velocitat inicial de salt (negativa)
+		this.player.body.setGravityY(0); // gravity
+		this.jumpVelocity = -20000;        // initial jump speed
 		this.jumpTime = 0;
 		this.isJumping = false;
-		this.gravity = 1000;             // Acceleració positiva per caiguda
-		this.jumpDuration = 2000;         // ms que dura la pujada (0.8 segons)
-		this.maxJumpHeight = -20000; // velocitat vertical inicial màxima
-		this.jumpAcceleration = 2000; // com de ràpid s’atura durant el salt
+		this.gravity = 1000;             // falling acceleration
+		this.jumpDuration = 2000;         // jump duration
+		this.maxJumpHeight = -20000; // initial vertical speed
+		this.jumpAcceleration = 2000; // how fast is player jump stopping
 
 		// jump to next level
 		this.nextLevelZone = this.add.zone(map.widthInPixels - 100, map.heightInPixels - 100, 64, 64);
-		this.physics.world.enable(this.nextLevelZone);  // Habilitem física
-		this.nextLevelZone.body.setAllowGravity(false); // Que no caigui
-		this.nextLevelZone.body.setImmovable(true);     // Que no es mogui
-		this.nextLevelZone.body.setSize(200, 200);        // Ajustem la mida si cal
+		this.physics.world.enable(this.nextLevelZone);  // physics
+		this.nextLevelZone.body.setAllowGravity(false); // so the player doesn't fall
+		this.nextLevelZone.body.setImmovable(true);     // so the player doesn't move
+		this.nextLevelZone.body.setSize(200, 200);        
 
-		// Variable per controlar si el jugador està a la zona
+		// variable to control if the player is in the zone
 		this.isPlayerInNextZone = false;
 		this.isDead = false;
 
@@ -122,9 +119,9 @@ export class Level1Scene extends Phaser.Scene {
 			enemy.setCollideWorldBounds(true);
 			this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 8, end: 11 }), frameRate: 6,repeat: -1});
 			enemy.play('enemy_walk');
-			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
-			enemy.direction = 'left'; // Guardem direcció actual
-			enemy.startX = enemyObj.x; // Guardem posició inicial
+			enemy.setVelocityX(-50); // starts moving to the left
+			enemy.direction = 'left'; // saving current direction
+			enemy.startX = enemyObj.x; // saving current position
 			enemy.lastHitTime = 0;
 			enemy.body.setSize(85, 60);
 		});
@@ -147,27 +144,27 @@ export class Level1Scene extends Phaser.Scene {
 		//this.treasureFoundCount = 0;
 		this.treasureFoundCount = this.registry.get('treasures');
 
-		// Detectar overlap entre player i tresors
+		// Detecting overlap
 		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
-			//increaseTreasureCount();        // incrementem la puntuació global
-			treasure.disableBody(true, true);            // eliminem el tresor del mapa
+			//increaseTreasureCount();        // increasing the global count
+			treasure.disableBody(true, true);            // deleting item from the map
 			this.treasureFoundCount++;
 			this.registry.set('treasures', this.treasureFoundCount);
 			this.lootText.setText('' + this.treasureFoundCount);
 			console.log("Tresors trobats: " + this.treasureFoundCount);
 		}, null, this);
 
-		// Simple keyboard controls (temporary)
+		// Simple keyboard controls
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-		//this.enemyKillCount = 0; // Inicialitzem contador local de morts
+		//this.enemyKillCount = 0; 
 		this.enemyKillCount = this.registry.get('kills');
 		//this.playerLives = 10;
 		this.playerLives = this.registry.get('lives');
 
 		this.livesText = this.add.text(112, 32, '' + this.playerLives, { fontSize: '18px', fill: '#fff' });
-		this.livesText.setScrollFactor(0); // perquè es mantingui a la càmera
+		this.livesText.setScrollFactor(0);
 		this.lootText = this.add.text(412, 32, '' + this.treasureFoundCount, { fontSize: '18px', fill: '#fff' });
 		this.lootText.setScrollFactor(0);
 		this.bearsText = this.add.text(712, 32, '' + this.enemyKillCount, { fontSize: '18px', fill: '#fff' });
@@ -182,7 +179,7 @@ export class Level1Scene extends Phaser.Scene {
     update() {
 		const speed = 200;
 		const isOnFloor = this.player.body.onFloor();
-		const delta = this.game.loop.delta / 500; // pas a segons
+		const delta = this.game.loop.delta / 500;
 
 		let moving = false;
 		let right_left = false;
@@ -201,7 +198,7 @@ export class Level1Scene extends Phaser.Scene {
 			right_left = true;
 		}
 
-		// Salt
+		// Jump
 		if (this.cursors.up.isDown && isOnFloor && !this.isJumping) {
 			this.isJumping = true;
 			this.jumpTime = 0;
@@ -210,7 +207,7 @@ export class Level1Scene extends Phaser.Scene {
 			this.player.play('jump', true);
 		}
 
-		// Mantenir el salt si s'està dins el temps de pujada
+		// Keeping the jump while rising
 		if (this.isJumping) {
 			this.jumpTime += delta;
 
@@ -220,10 +217,10 @@ export class Level1Scene extends Phaser.Scene {
 				this.player.setVelocityX(-speed*4);
 			}
 
-			// aplicar acceleració negativa per simular la frenada
+			// applyingh negative acceleration
 			const newVelocityY = this.player.body.velocity.y - this.jumpAcceleration * delta;
 
-			// Si ja ha passat el temps màxim de salt o estem caient, acabem el salt
+			// ending the jump
 			if (this.jumpTime > this.jumpDuration / 1000 || newVelocityY >= 0) {
 				this.isJumping = false;
 			} else {
@@ -231,19 +228,19 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		}
 
-		// Gravetat per caiguda (només si no saltem i no estem tocant terra)
+		// applying gravity
 		if (!this.player.body.onFloor() && !this.isJumping) {
 			const newVelocityY = this.player.body.velocity.y + this.gravity * delta;
 			this.player.setVelocityY(newVelocityY);
 		}
 
-		// EVITAR REBOTS: al tocar terra, forcem velocitat vertical a 0
+		// no bouncing
 		if (this.player.body.onFloor() && !this.cursors.up.isDown) {
 			this.player.setVelocityY(0);
 			this.isJumping = false;
 		}
 
-        // Estats
+        // State machine
 		if (!isOnFloor) {
 			this.player.setVelocityY(200);
 			this.playerState = 'jump';
@@ -270,23 +267,23 @@ export class Level1Scene extends Phaser.Scene {
 			}
 		}
 
-		// Comprovem si s'ha premut la tecla d'atac
+		// Attacking
 		if (Phaser.Input.Keyboard.JustDown(this.attackKey)) {
 			this.player.play('attack', true);
 
-			// Coordenades del jugador
+			// Player position
 			const px = this.player.x;
 			const py = this.player.y;
 
-			// Radi de detecció
+			// detection radius
 			const detectionRadius = 120;
 
-			// Filtrar enemics dins el radi
+			// filter for enemies in range
 			this.enemies.getChildren().forEach(enemy => {
 				const distance = Phaser.Math.Distance.Between(px, py, enemy.x, enemy.y);
 
 				if (distance <= detectionRadius && enemy.active) {
-					enemy.disableBody(true, true); // Elimina l’enemic
+					enemy.disableBody(true, true); // deleting the enemy
 					this.enemyKillCount++;
 					this.registry.set('kills', this.enemyKillCount);
 					this.bearsText.setText('' + this.enemyKillCount);
@@ -295,15 +292,15 @@ export class Level1Scene extends Phaser.Scene {
 			});
 		}
 
-		// Reset la variable abans de fer la comprovació
+		// resseting the variable before checking
 		this.isPlayerInNextZone = false;
 
-		// Comprovem si està overlap
+		// checking for overlap
 		this.physics.overlap(this.player, this.nextLevelZone, () => {
 			this.isPlayerInNextZone = true;
 		}, null, this);
 
-		// Si està dins la zona i prem Q, canviem escena
+		// changing the scene
 		if (this.isPlayerInNextZone && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('Q'))) {
 			if (this.treasureFoundCount > 6) {
 				console.log("Starting level 2");
@@ -321,7 +318,7 @@ export class Level1Scene extends Phaser.Scene {
 			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
 
 			if (!tileBelow || wallAhead || (Math.abs(enemy.x - enemy.startX) > 120)) {
-				// Canviem direcció
+				// changing the direction
 				if (enemy.direction === 'left') {
 					enemy.startX = enemy.x;
 					enemy.direction = 'right';
@@ -335,11 +332,11 @@ export class Level1Scene extends Phaser.Scene {
 				}
 			}
 
-			// Coordenades del jugador
+			// player position
 			const px = this.player.x;
 			const py = this.player.y;
 
-			// Radi de detecció
+			// detection radius of the bear
 			const detectionRadiusBear = 40;
 			const distanceBear = Phaser.Math.Distance.Between(px, py, enemy.x, enemy.y);
 			const currentTime = this.time.now;
@@ -351,10 +348,10 @@ export class Level1Scene extends Phaser.Scene {
 					this.playerLives--;
 					this.registry.set('lives', this.playerLives);
 					if (this.player.x < enemy.x) {
-						// L'enemic està a la dreta, empeny cap a l'esquerra
+						// the enemy is to the right, push to the left
 						this.player.x -= pushAmount;
 					} else {
-						// L'enemic està a l'esquerra, empeny cap a la dreta
+						// the enemy is to the left, push to the right
 						this.player.x += pushAmount;
 					}
 					this.player.play('damage', true);
@@ -370,11 +367,11 @@ export class Level1Scene extends Phaser.Scene {
 						this.player.setVelocity(0);
 						this.player.anims.play('death');
 
-						// Desactiva col·lisions, controls, etc.
+						// desactivating controls
 						this.physics.pause();
 						this.player.setTint(0xff0000);
 
-						// Espera 3 segons i canvia d’escena
+						// wait 3 second and change the scene
 						this.time.delayedCall(3000, () => {
 							this.scene.start('DeathScene');
 						});

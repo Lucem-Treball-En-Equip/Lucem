@@ -4,8 +4,7 @@ export class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        // Example asset loading (add your own later)
-        // this.load.image('player', 'assets/player.png');
+        
     }
 
     create() {

@@ -4,7 +4,7 @@ export class DeathScene extends Phaser.Scene {
     }
 
 	preload() {
-        this.load.image('black', '../resources/dialog/black.png');
+        this.load.image('black', '../resources/backgrounds/black.png');
 		this.load.image('frame', '../resources/dialog/frame.png');
         this.load.image('d4', '../resources/dialog/d4.png');
         this.load.image('skip', '../resources/dialog/skip.png');
@@ -56,9 +56,6 @@ export class DeathScene extends Phaser.Scene {
             if (this.currentLine < this.dialogueLines.length) {
                 this.updateDialogue();
             } else {
-                //alert('Level 1 starting!');
-                //this.scene.start('Level1Scene');
-				//alert('No next level yet!');
                 if (this.musicOwn && this.musicOwn.isPlaying) {
                     this.musicOwn.stop();
                     this.registry.remove('dead');

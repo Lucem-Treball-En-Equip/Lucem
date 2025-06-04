@@ -43,7 +43,7 @@ export class IntroScene extends Phaser.Scene {
             if (this.currentLine < this.dialogueLines.length) {
                 this.updateDialogue();
             } else {
-                alert('Level 1 starting!');
+                //alert('Level 1 starting!');
                 this.scene.start('Level1Scene');
 				//alert('No next level yet!');
 				//window.location.href = "../index.html";

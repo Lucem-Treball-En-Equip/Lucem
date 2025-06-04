@@ -81,22 +81,16 @@ export class Level1Scene extends Phaser.Scene {
 		this.jumpDuration = 2000;         // ms que dura la pujada (0.8 segons)
 		this.maxJumpHeight = -20000; // velocitat vertical inicial màxima
 		this.jumpAcceleration = 2000; // com de ràpid s’atura durant el salt
-		
-		// Find teleport zone object
-		const teleportZoneObj = map.findObject('SpawnPoints', obj => obj.name === 'NextLevelZone');
 
-		this.teleportZone = this.physics.add.staticImage(teleportZoneObj.x + teleportZoneObj.width / 2, teleportZoneObj.y - teleportZoneObj.height / 2, null);
-		this.teleportZone.setSize(teleportZoneObj.width, teleportZoneObj.height);
-		this.teleportZone.setVisible(false); // optional: make it invisible in-game
+		// jump to next level
+		this.nextLevelZone = this.add.zone(map.widthInPixels - 100, map.heightInPixels - 100, 64, 64);
+		this.physics.world.enable(this.nextLevelZone);  // Habilitem física
+		this.nextLevelZone.body.setAllowGravity(false); // Que no caigui
+		this.nextLevelZone.body.setImmovable(true);     // Que no es mogui
+		this.nextLevelZone.body.setSize(200, 200);        // Ajustem la mida si cal
 
-		// Enable overlap detection
-		this.physics.add.overlap(this.player, this.teleportZone, () => {
-			this.isInTeleportZone = true;
-		}, null, this);
-
-		// Reset when not overlapping
-		this.physics.add.overlap(this.player, this.teleportZone, () => {}, null, this);
-		this.isInTeleportZone = false;
+		// Variable per controlar si el jugador està a la zona
+		this.isPlayerInNextZone = false;
 
         // Camera setup
 		this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -153,7 +147,6 @@ export class Level1Scene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-		const qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 		this.enemyKillCount = 0; // Inicialitzem contador local de morts
 		this.playerLives = 10;
 
@@ -280,8 +273,19 @@ export class Level1Scene extends Phaser.Scene {
 			});
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(qKey) && this.isInTeleportZone) {
-			this.scene.start('Level2Scene'); // or whatever the next scene is
+		// Reset la variable abans de fer la comprovació
+		this.isPlayerInNextZone = false;
+
+		// Comprovem si està overlap
+		this.physics.overlap(this.player, this.nextLevelZone, () => {
+			this.isPlayerInNextZone = true;
+		}, null, this);
+
+		// Si està dins la zona i prem Q, canviem escena
+		if (this.isPlayerInNextZone && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('Q'))) {
+			console.log("Starting level 2");
+			alert('Level 2 starting!');
+			this.scene.start('Level2Scene');
 		}
 
 		// Enemy movements

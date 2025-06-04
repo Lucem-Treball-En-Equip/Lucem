@@ -10,7 +10,7 @@ export class DeathScene extends Phaser.Scene {
         this.load.image('skip', '../resources/dialog/skip.png');
         this.load.image('esc', '../resources/dialog/esc.png');
 
-        this.load.audio('dead', 'resources/audio/dead.mp3');
+        this.load.audio('dead', '../resources/audio/dead.mp3');
     }
 	
     create() {

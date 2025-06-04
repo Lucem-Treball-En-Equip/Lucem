@@ -10,7 +10,7 @@ export class IntroScene extends Phaser.Scene {
         this.load.image('skip', '../resources/dialog/skip.png');
         this.load.image('esc', '../resources/dialog/esc.png');
 
-        this.load.audio('introMusic', 'resources/audio/level.mp3');
+        this.load.audio('introMusic', '../resources/audio/level.mp3');
     }
 	
     create() {

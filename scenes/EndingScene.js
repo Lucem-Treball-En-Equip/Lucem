@@ -17,7 +17,7 @@ export class EndingScene extends Phaser.Scene {
         this.load.image('skip', '../resources/dialog/skip.png');
         this.load.image('esc', '../resources/dialog/esc.png');
 
-        this.load.audio('end', 'resources/audio/end.mp3');
+        this.load.audio('end', '../resources/audio/end.mp3');
     }
 	
     create() {

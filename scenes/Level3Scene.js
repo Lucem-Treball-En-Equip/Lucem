@@ -4,9 +4,9 @@ export class Level3Scene extends Phaser.Scene {
     }
 
 	preload() {
-        this.load.tilemapTiledJSON('level1', '../resources/maps/level1new.json');
+        this.load.tilemapTiledJSON('level3', '../resources/maps/level3new.json');
         this.load.image('tiles', '../resources/tiles2/tiles.png');
-        this.load.image('b1', '../resources/tiles2/b1.png');
+        this.load.image('b3', '../resources/tiles2/b3.png');
 
         this.load.spritesheet('player', '../resources/characters/player.png', {
             frameWidth: 75,
@@ -30,19 +30,19 @@ export class Level3Scene extends Phaser.Scene {
 	
     create() {
 		// Load map
-		const map = this.make.tilemap({ key: 'level1' });
+		const map = this.make.tilemap({ key: 'level3' });
 
         // Afegim els tilesets (com coincideixen amb el nom definit a Tiled)
         const tiles = map.addTilesetImage('tiles', 'tiles');
-        const b1 = map.addTilesetImage('b1', 'b1');
+        const b3 = map.addTilesetImage('b3', 'b3');
 
         // Tile layers
-		const backgroundLayer = map.createLayer('Background', [tiles, b1], 0, 0);
+		const backgroundLayer = map.createLayer('Background', [tiles, b3], 0, 0);
         //backgroundLayer.setCollisionByProperty({ collides: true });
 
-		const groundLayer = map.createLayer('Ground', [tiles, b1], 0, 0);
-		const platformsLayer = map.createLayer('Platforms', [tiles, b1], 0, 0);
-		const fireLayer = map.createLayer('Foreground', [tiles, b1], 0, 0);
+		const groundLayer = map.createLayer('Ground', [tiles, b3], 0, 0);
+		const platformsLayer = map.createLayer('Platforms', [tiles, b3], 0, 0);
+		const fireLayer = map.createLayer('Foreground', [tiles, b3], 0, 0);
         //groundLayer.setCollisionByProperty({ collides: true });
         //platformsLayer.setCollisionByProperty({ collides: true });
 
@@ -87,7 +87,7 @@ export class Level3Scene extends Phaser.Scene {
 		this.physics.world.enable(this.nextLevelZone);  // Habilitem física
 		this.nextLevelZone.body.setAllowGravity(false); // Que no caigui
 		this.nextLevelZone.body.setImmovable(true);     // Que no es mogui
-		this.nextLevelZone.body.setSize(200, 200);        // Ajustem la mida si cal
+		this.nextLevelZone.body.setSize(300, 300);        // Ajustem la mida si cal
 
 		// Variable per controlar si el jugador està a la zona
 		this.isPlayerInNextZone = false;

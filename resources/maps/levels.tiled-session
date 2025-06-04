@@ -64,21 +64,43 @@
             "scaleInDock": 1
         },
         "level2new.json": {
+            "expandedObjectLayers": [
+                6,
+                8,
+                7
+            ],
             "scale": 0.5,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 588,
-                "y": 43
+                "x": 891,
+                "y": 299
             }
         },
         "level2new.json#b1": {
-            "scaleInDock": 0.25
+            "scaleInDock": 0.5
         },
         "level2new.json#b2": {
             "scaleInDock": 0.25
         },
         "level2new.json#tiles": {
-            "scaleInDock": 1
+            "scaleInDock": 0.5
+        },
+        "level3new.json": {
+            "scale": 0.44913888888888887,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 840.4972478199023,
+                "y": 301.6884161048921
+            }
+        },
+        "level3new.json#b1": {
+            "scaleInDock": 0.5
+        },
+        "level3new.json#b3": {
+            "scaleInDock": 0.5
+        },
+        "level3new.json#tiles": {
+            "scaleInDock": 0.5
         }
     },
     "last.exportedFilePath": "D:/uni/Curs 2024-2025/Sem 2/Jocs Web/NewLucem/Lucem/resources/maps",

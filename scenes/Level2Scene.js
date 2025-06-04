@@ -333,7 +333,7 @@ export class Level2Scene extends Phaser.Scene {
 			const py = this.player.y;
 
 			// Radi de detecció
-			const detectionRadiusBear = 40;
+			const detectionRadiusBear = 55;
 			const distanceBear = Phaser.Math.Distance.Between(px, py, enemy.x, enemy.y);
 			const currentTime = this.time.now;
 			const pushAmount = 100;

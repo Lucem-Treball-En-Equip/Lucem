@@ -13,8 +13,8 @@ export class DeathScene extends Phaser.Scene {
 	
     create() {
 		this.add.image(400, 300, 'black').setOrigin(0.5); // 800x600 canvas
-        this.add.image(720, 530, 'skip').setScrollFactor(0).setVisible(true);
-        this.add.image(30, 530, 'esc').setScrollFactor(0).setVisible(true);
+        this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
+        this.add.image(50, 570, 'esc').setScrollFactor(0).setVisible(true);
 		
 		this.characterImages = [
             this.add.image(400, 300, 'frame').setVisible(true),

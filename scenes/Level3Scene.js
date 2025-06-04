@@ -165,6 +165,11 @@ export class Level3Scene extends Phaser.Scene {
 		this.lootText.setScrollFactor(0);
 		this.bearsText = this.add.text(712, 32, '' + this.enemyKillCount, { fontSize: '18px', fill: '#fff' });
 		this.bearsText.setScrollFactor(0);
+
+		this.input.keyboard.on('keydown-ESC', () => {
+            this.scene.pause();
+            this.scene.launch('PauseScene', { returnTo: this.scene.key }); // Pass the current scene's key
+        });
     }
 
     update() {
@@ -348,7 +353,7 @@ export class Level3Scene extends Phaser.Scene {
 					this.player.play('damage', true);
 					this.player.setTint(0xff0000); // Red tint to indicate damage
 					this.time.delayedCall(500, () => {
-						player.clearTint(); // Remove the tint after 1 second
+						this.player.clearTint(); // Remove the tint after 1 second
 					});
 					this.livesText.setText('' + this.playerLives);
 					console.log("Player wounded. Lifes left: " + this.playerLives);

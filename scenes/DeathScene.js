@@ -51,6 +51,11 @@ export class DeathScene extends Phaser.Scene {
 				window.location.href = "../index.html";
             }
         });
+
+        this.input.keyboard.on('keydown-ESC', () => {
+            this.scene.pause();
+            this.scene.launch('PauseScene', { returnTo: this.scene.key }); // Pass the current scene's key
+        });
     }
 
     updateDialogue() {

@@ -50,9 +50,9 @@ export class Level1Scene extends Phaser.Scene {
 		groundLayer.setCollisionByExclusion([-1]);
 		platformsLayer.setCollisionByExclusion([-1]);
 
-		this.add.image(50, 30, 'heart_icon').setVisible(true);
-		this.add.image(350, 30, 'bear_icon').setVisible(true);
-		this.add.image(700, 30, 'loot_icon').setVisible(true);
+		this.add.image(100, 40, 'heart_icon').setScrollFactor(0).setVisible(true);
+		this.add.image(400, 40, 'loot_icon').setScrollFactor(0).setVisible(true);
+		this.add.image(700, 40, 'bear_icon').setScrollFactor(0).setVisible(true);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');
@@ -129,7 +129,7 @@ export class Level1Scene extends Phaser.Scene {
 			//increaseTreasureCount();        // incrementem la puntuació global
 			treasure.disableBody(true, true);            // eliminem el tresor del mapa
 			this.treasureFoundCount++;
-			this.lootText.setText('Loot killed: ' + this.treasureFoundCount);
+			this.lootText.setText('' + this.treasureFoundCount);
 			console.log("Tresors trobats: " + this.treasureFoundCount);
 		}, null, this);
 
@@ -140,13 +140,12 @@ export class Level1Scene extends Phaser.Scene {
 		this.enemyKillCount = 0; // Inicialitzem contador local de morts
 		this.playerLives = 10;
 
-		this.livesText = this.add.text(16, 16, 'Lives left: ' + this.playerLives, { fontSize: '20px', fill: '#000' });
+		this.livesText = this.add.text(112, 32, '' + this.playerLives, { fontSize: '18px', fill: '#fff' });
 		this.livesText.setScrollFactor(0); // perquè es mantingui a la càmera
-		this.bearsText = this.add.text(600, 16, 'Bears killed: ' + this.enemyKillCount, { fontSize: '20px', fill: '#000' });
-		this.bearsText.setScrollFactor(0);
-		this.lootText = this.add.text(400, 16, 'Loot collected: ' + this.treasureFoundCount, { fontSize: '20px', fill: '#000' });
+		this.lootText = this.add.text(412, 32, '' + this.treasureFoundCount, { fontSize: '18px', fill: '#fff' });
 		this.lootText.setScrollFactor(0);
-
+		this.bearsText = this.add.text(712, 32, '' + this.enemyKillCount, { fontSize: '18px', fill: '#fff' });
+		this.bearsText.setScrollFactor(0);
     }
 
     update() {
@@ -258,7 +257,7 @@ export class Level1Scene extends Phaser.Scene {
 				if (distance <= detectionRadius && enemy.active) {
 					enemy.disableBody(true, true); // Elimina l’enemic
 					this.enemyKillCount++;
-					this.bearsText.setText('Bears killed: ' + this.enemyKillCount);
+					this.bearsText.setText('' + this.enemyKillCount);
 					console.log("Enemic eliminat. Total kills: " + this.enemyKillCount);
 				}
 			});
@@ -306,7 +305,7 @@ export class Level1Scene extends Phaser.Scene {
 						this.player.x += pushAmount;
 					}
 					this.player.play('damage', true);
-					this.livesText.setText('Lives left: ' + this.playerLives);
+					this.livesText.setText('' + this.playerLives);
 					console.log("Player wounded. Lifes left: " + this.playerLives);
 				}
 			}

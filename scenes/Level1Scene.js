@@ -64,6 +64,15 @@ export class Level1Scene extends Phaser.Scene {
 		this.anims.create({ key: 'death', frames: [ { key: 'player', frame: 35 } ], frameRate: 1 });
 
 		this.playerState = 'idle';
+
+		this.player.body.setGravityY(0); // Gestionarem la gravetat manualment
+		this.jumpVelocity = -20000;        // Velocitat inicial de salt (negativa)
+		this.jumpTime = 0;
+		this.isJumping = false;
+		this.gravity = 1000;             // Acceleració positiva per caiguda
+		this.jumpDuration = 2000;         // ms que dura la pujada (0.8 segons)
+		this.maxJumpHeight = -20000; // velocitat vertical inicial màxima
+		this.jumpAcceleration = 2000; // com de ràpid s’atura durant el salt
 		
         // Camera setup
 		this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -85,6 +94,7 @@ export class Level1Scene extends Phaser.Scene {
 			enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
+			enemy.startX = enemyObj.x; // Guardem posició inicial
 			enemy.body.setSize(85, 60);
 		});
 
@@ -112,26 +122,65 @@ export class Level1Scene extends Phaser.Scene {
     update() {
 		const speed = 200;
 		const isOnFloor = this.player.body.onFloor();
+		const delta = this.game.loop.delta / 500; // pas a segons
 
 		let moving = false;
+		let right_left = false;
 		
-		this.player.setVelocity(0);
+		this.player.setVelocityX(0);
 
 		if (this.cursors.left.isDown) {
 			this.player.setVelocityX(-speed);
 			this.player.setFlipX(true);
 			moving = true;
+			right_left = false;
 		} else if (this.cursors.right.isDown) {
 			this.player.setVelocityX(speed);
 			this.player.setFlipX(false);
 			moving = true;
+			right_left = true;
 		}
 
 		// Salt
-		if (this.cursors.up.isDown && isOnFloor) {
-			this.player.setVelocityY(-15000);
+		if (this.cursors.up.isDown && isOnFloor && !this.isJumping) {
+			this.isJumping = true;
+			this.jumpTime = 0;
+			this.player.setVelocityY(this.maxJumpHeight);
 			this.playerState = 'jump';
 			this.player.play('jump', true);
+		}
+
+		// Mantenir el salt si s'està dins el temps de pujada
+		if (this.isJumping) {
+			this.jumpTime += delta;
+
+			if (right_left) {
+				this.player.setVelocityX(speed*4);
+			} else {
+				this.player.setVelocityX(-speed*4);
+			}
+
+			// aplicar acceleració negativa per simular la frenada
+			const newVelocityY = this.player.body.velocity.y - this.jumpAcceleration * delta;
+
+			// Si ja ha passat el temps màxim de salt o estem caient, acabem el salt
+			if (this.jumpTime > this.jumpDuration / 1000 || newVelocityY >= 0) {
+				this.isJumping = false;
+			} else {
+				this.player.setVelocityY(newVelocityY);
+			}
+		}
+
+		// Gravetat per caiguda (només si no saltem i no estem tocant terra)
+		if (!this.player.body.onFloor() && !this.isJumping) {
+			const newVelocityY = this.player.body.velocity.y + this.gravity * delta;
+			this.player.setVelocityY(newVelocityY);
+		}
+
+		// EVITAR REBOTS: al tocar terra, forcem velocitat vertical a 0
+		if (this.player.body.onFloor() && !this.cursors.up.isDown) {
+			this.player.setVelocityY(0);
+			this.isJumping = false;
 		}
 
         // Estats
@@ -165,13 +214,15 @@ export class Level1Scene extends Phaser.Scene {
 			const tileBelow = enemy.body.blocked.down || enemy.body.touching.down;
 			const wallAhead = enemy.body.blocked.left || enemy.body.blocked.right;
 
-			if (!tileBelow || wallAhead) {
+			if (!tileBelow || wallAhead || (Math.abs(enemy.x - enemy.startX) > 120)) {
 				// Canviem direcció
 				if (enemy.direction === 'left') {
+					enemy.startX = enemy.x;
 					enemy.direction = 'right';
 					enemy.setFlipX(true);
 					enemy.setVelocityX(100);
 				} else {
+					enemy.startX = enemy.x;
 					enemy.direction = 'left';
 					enemy.setFlipX(false);
 					enemy.setVelocityX(-100);

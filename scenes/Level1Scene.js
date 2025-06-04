@@ -62,7 +62,7 @@ export class Level1Scene extends Phaser.Scene {
 		this.add.image(100, 40, 'heart_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(400, 40, 'loot_icon').setScrollFactor(0).setVisible(true);
 		this.add.image(700, 40, 'bear_icon').setScrollFactor(0).setVisible(true);
-		this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
+		//this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
         this.add.image(50, 570, 'esc').setScrollFactor(0).setVisible(true);
 
         // Find player spawn from object layer

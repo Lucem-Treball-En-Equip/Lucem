@@ -288,9 +288,14 @@ export class Level3Scene extends Phaser.Scene {
 
 		// Si està dins la zona i prem Q, canviem escena
 		if (this.isPlayerInNextZone && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('Q'))) {
-			console.log("Starting Ending scene");
-			//alert('Ending scene starting!');
-			this.scene.start('EndingScene');
+			if (this.treasureFoundCount > 6) {
+				console.log("Starting Ending scene");
+				//alert('Ending scene starting!');
+				this.scene.start('EndingScene');
+			} else {
+				console.log("Insuffincient loot");
+				alert('Collect at least 7 pieces of equipment!');
+			}
 		}
 
 		// Enemy movements

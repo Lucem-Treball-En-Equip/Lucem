@@ -13,7 +13,7 @@ export class EndingScene extends Phaser.Scene {
         this.load.image('d1', '../resources/dialog/d1.png');
         this.load.image('d2', '../resources/dialog/d2.png');
         this.load.image('d3', '../resources/dialog/d3.png');
-        this.load.image('d3', '../resources/dialog/d4.png');
+        this.load.image('d4', '../resources/dialog/d4.png');
     }
 	
     create() {
@@ -41,13 +41,11 @@ export class EndingScene extends Phaser.Scene {
         this.dialogueLines = [
             { text: "Doctor Greenaway? You made it! We saw your signal by the ridge. Welcome to our final camp.", imageIndex: 1 },
             { text: "It wasn’t easy. I crossed frozen streams and silent valleys. But the sky above made it all worth it.", imageIndex: 0 },
-            { text: "You brought most of the equipment. Without it, the magnetometers would be useless tonight.", imageIndex: 1 },
-            { text: "And we wouldn’t be able to record the electromagnetic frequencies we’re hoping to catch.", imageIndex: 1 },
+            { text: "You brought most of the equipment. Without it, the magnetometers would be useless tonight. And we wouldn’t be able to record the electromagnetic frequencies we’re hoping to catch.", imageIndex: 1 },
             { text: "The Aurora should be strongest in this region. Our models suggest a rare harmonic resonance.", imageIndex: 1 },
-            { text: "If we’re lucky, we won’t just see the Northern Lights. We might finally hear them sing.", imageIndex: 0 },
-            { text: "After all the chaos, the cold, the running—we still made it here to witness something sublime.", imageIndex: 0 },
+            { text: "If we’re lucky, we won’t just see the Northern Lights. We might finally hear them sing. After all the chaos, the cold, the running - we still made it here to witness something sublime.", imageIndex: 0 },
             { text: "It’s strange, isn’t it? We chase beauty across hostile terrain, just to stand in its presence.", imageIndex: 1 },
-            { text: "It’s what drives us as scientists, I suppose. The unknown calls, and we answer—even when it hurts.", imageIndex: 0 },
+            { text: "It’s what drives us as scientists, I suppose. The unknown calls, and we answer - even when it hurts.", imageIndex: 0 },
             { text: "And maybe, deep down, it’s also what makes us human.", imageIndex: 2 },
 			{ text: "", imageIndex: 3 },
             { text: "", imageIndex: 4 },

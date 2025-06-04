@@ -22,6 +22,10 @@ export class Level1Scene extends Phaser.Scene {
             frameWidth: 55,
 			frameHeight: 42
         });
+
+		this.load.image('heart_icon', '../resources/dialog/heart_icon.png');
+        this.load.image('bear_icon', '../resources/dialog/bear_icon.png');
+        this.load.image('loot_icon', '../resources/dialog/loot_icon.png');
     }
 	
     create() {
@@ -45,6 +49,10 @@ export class Level1Scene extends Phaser.Scene {
         // Enable collisions on certain layers
 		groundLayer.setCollisionByExclusion([-1]);
 		platformsLayer.setCollisionByExclusion([-1]);
+
+		this.add.image(50, 16, 'heart_icon').setVisible(true);
+		this.add.image(300, 16, 'bear_icon').setVisible(true);
+		this.add.image(700, 16, 'loot_icon').setVisible(true);
 
         // Find player spawn from object layer
 		const spawnPoint = map.findObject('SpawnPoints', obj => obj.name === 'Player');
@@ -132,11 +140,11 @@ export class Level1Scene extends Phaser.Scene {
 		this.enemyKillCount = 0; // Inicialitzem contador local de morts
 		this.playerLives = 10;
 
-		this.livesText = this.add.text(16, 16, 'Lives left: ' + this.playerLives, { fontSize: '24px', fill: '#000' });
+		this.livesText = this.add.text(16, 16, 'Lives left: ' + this.playerLives, { fontSize: '20px', fill: '#000' });
 		this.livesText.setScrollFactor(0); // perquè es mantingui a la càmera
-		this.bearsText = this.add.text(16, 46, 'Bears killed: ' + this.enemyKillCount, { fontSize: '24px', fill: '#000' });
+		this.bearsText = this.add.text(600, 16, 'Bears killed: ' + this.enemyKillCount, { fontSize: '20px', fill: '#000' });
 		this.bearsText.setScrollFactor(0);
-		this.lootText = this.add.text(16, 76, 'Loot collected: ' + this.treasureFoundCount, { fontSize: '24px', fill: '#000' });
+		this.lootText = this.add.text(400, 16, 'Loot collected: ' + this.treasureFoundCount, { fontSize: '20px', fill: '#000' });
 		this.lootText.setScrollFactor(0);
 
     }

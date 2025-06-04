@@ -9,12 +9,20 @@ export class IntroScene extends Phaser.Scene {
         this.load.image('team', '../resources/dialog/teamdialog.png');
         this.load.image('skip', '../resources/dialog/skip.png');
         this.load.image('esc', '../resources/dialog/esc.png');
+
+        this.load.audio('introMusic', 'resources/audio/level.mp3');
     }
 	
     create() {
 		this.add.image(400, 300, 'bg').setOrigin(0.5); // 800x600 canvas
         this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
         this.add.image(50, 570, 'esc').setScrollFactor(0).setVisible(true);
+
+        this.music = this.sound.add('introMusic', { loop: true });
+        this.music.play();
+
+        // Desa la música a la "data" global si vols parar-la des d'una altra escena
+        this.registry.set('introMusicRef', this.music);
 		
 		this.characterImages = [
             this.add.image(400, 300, 'doctor').setVisible(true),

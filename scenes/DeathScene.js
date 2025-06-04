@@ -9,12 +9,23 @@ export class DeathScene extends Phaser.Scene {
         this.load.image('d4', '../resources/dialog/d4.png');
         this.load.image('skip', '../resources/dialog/skip.png');
         this.load.image('esc', '../resources/dialog/esc.png');
+
+        this.load.audio('dead', 'resources/audio/dead.mp3');
     }
 	
     create() {
 		this.add.image(400, 300, 'black').setOrigin(0.5); // 800x600 canvas
         this.add.image(750, 570, 'skip').setScrollFactor(0).setVisible(true);
         this.add.image(50, 570, 'esc').setScrollFactor(0).setVisible(true);
+
+        const music = this.registry.get('introMusicRef');
+        if (music && music.isPlaying) {
+            music.stop();
+            this.registry.remove('introMusicRef');
+        }
+
+        this.musicOwn = this.sound.add('dead', { loop: true });
+        this.musicOwn.play();
 		
 		this.characterImages = [
             this.add.image(400, 300, 'frame').setVisible(true),
@@ -48,6 +59,10 @@ export class DeathScene extends Phaser.Scene {
                 //alert('Level 1 starting!');
                 //this.scene.start('Level1Scene');
 				//alert('No next level yet!');
+                if (this.musicOwn && this.musicOwn.isPlaying) {
+                    this.musicOwn.stop();
+                    this.registry.remove('dead');
+                }
 				window.location.href = "../index.html";
             }
         });
@@ -56,6 +71,7 @@ export class DeathScene extends Phaser.Scene {
             this.scene.pause();
             this.scene.launch('PauseScene', { returnTo: this.scene.key }); // Pass the current scene's key
         });
+
     }
 
     updateDialogue() {

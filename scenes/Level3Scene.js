@@ -91,6 +91,7 @@ export class Level3Scene extends Phaser.Scene {
 
 		// Variable per controlar si el jugador està a la zona
 		this.isPlayerInNextZone = false;
+		this.isDead = false;
 
         // Camera setup
 		this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -343,6 +344,21 @@ export class Level3Scene extends Phaser.Scene {
 					this.player.play('damage', true);
 					this.livesText.setText('' + this.playerLives);
 					console.log("Player wounded. Lifes left: " + this.playerLives);
+
+					if (this.playerLives <= 0) {
+						this.isDead = true;
+						this.player.setVelocity(0);
+						this.player.anims.play('death');
+
+						// Desactiva col·lisions, controls, etc.
+						this.physics.pause();
+						this.player.setTint(0xff0000);
+
+						// Espera 3 segons i canvia d’escena
+						this.time.delayedCall(3000, () => {
+							this.scene.start('DeathScene');
+						});
+					}
 				}
 			}
 

@@ -24,7 +24,7 @@ export class IntroScene extends Phaser.Scene {
             { text: "Negative, Doctor. We had all the supplies we needed but on our way to the observation point our team had to flee local bears. A few of the assistants dropped their bags with gear, equipment and food.", imageIndex: 1 },
 			{ text: "I remember that you are experienced in bear encounters so we hope that you could collect our lost gear on your way to us. Or the expedition will have to be cut short. Over.", imageIndex: 1 },
             { text: "Copy that. I am too excited to hear the Aurora song so I will help you. How did your team move through the forest and what is your position, Doctor Greenaway? Over.", imageIndex: 0 },
-            { text: "We are camping near the Vatnajökull Glacier. You will be able to follow our path by our campfires [Q]. We had to run all around, left [A] and right [D], jump on the bushes [W] and sneak under the rocks [S].", imageIndex: 1 },
+            { text: "We are camping near the Vatnajökull Glacier. You will be able to follow our path by our campfires [Q]. We had to run all around, left [←] and right [→], jump on the bushes [↑] and sneak under the rocks [↓].", imageIndex: 1 },
             { text: "Our physicist had to protect us from the bears with his pickaxe [E] but we were able to take a pause and rest time from time [ESC]. I hope you find us soon, Doctor, wouldn't want to miss this show. Out.", imageIndex: 1 }
         ];
 

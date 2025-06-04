@@ -1,6 +1,6 @@
-export class Level2Scene extends Phaser.Scene {
+export class Level3Scene extends Phaser.Scene {
     constructor() {
-        super('Level2Scene');
+        super('Level3Scene');
     }
 
 	preload() {
@@ -106,9 +106,9 @@ export class Level2Scene extends Phaser.Scene {
         // Spawn enemies from object layer
 		this.enemies = this.physics.add.group();
 		map.getObjectLayer('Enemies').objects.forEach(enemyObj => {
-			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 4);
+			const enemy = this.enemies.create(enemyObj.x, enemyObj.y, 'enemy', 0);
 			enemy.setCollideWorldBounds(true);
-			this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 4, end: 7 }), frameRate: 6,repeat: -1});
+			this.anims.create({ key: 'enemy_walk',frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 3 }), frameRate: 6,repeat: -1});
 			enemy.play('enemy_walk');
 			enemy.setVelocityX(-50); // Comença movent-se cap a l’esquerra
 			enemy.direction = 'left'; // Guardem direcció actual
@@ -283,9 +283,9 @@ export class Level2Scene extends Phaser.Scene {
 
 		// Si està dins la zona i prem Q, canviem escena
 		if (this.isPlayerInNextZone && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('Q'))) {
-			console.log("Starting level 3");
-			alert('Level 3 starting!');
-			this.scene.start('Level3Scene');
+			console.log("Starting Ending scene");
+			alert('Ending scene starting!');
+			this.scene.start('EndingScene');
 		}
 
 		// Enemy movements

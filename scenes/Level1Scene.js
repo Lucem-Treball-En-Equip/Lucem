@@ -1,4 +1,4 @@
-import { treasureCount, increaseTreasureCount } from '../js/globals';
+//import { treasureCount, increaseTreasureCount } from '../js/globals';
 export class Level1Scene extends Phaser.Scene {
     constructor() {
         super('Level1Scene');
@@ -114,10 +114,10 @@ export class Level1Scene extends Phaser.Scene {
 		// Collisions for treasures too
 		this.physics.add.collider(this.treasures, groundLayer);
 		this.physics.add.collider(this.treasures, platformsLayer);
-		
+
 		// Detectar overlap entre player i tresors
 		this.physics.add.overlap(this.player, this.treasures, (player, treasure) => {
-			increaseTreasureCount();        // incrementem la puntuació global
+			//increaseTreasureCount();        // incrementem la puntuació global
 			treasure.destroy();             // eliminem el tresor del mapa
 			console.log("Tresors trobats:", treasureCount); // debug
 		}, null, this);
